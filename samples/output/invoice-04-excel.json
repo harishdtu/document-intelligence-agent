@@ -1,0 +1,31 @@
+{
+  "sourceFile": "invoice-04-excel.xlsx",
+  "documentType": "excel",
+  "ocrUsed": false,
+  "extractionAttempts": 1,
+  "extractedData": {
+    "vendorName": "Meridian Trading Co.",
+    "invoiceNumber": "MTC-30845",
+    "invoiceDate": "2026-05-09",
+    "lineItems": [
+      { "description": "Imported Ceramic Tile - 12x12 (box of 10)", "quantity": 60, "unitPrice": 22.50, "total": 1350.00 },
+      { "description": "Packing Crate, Reinforced", "quantity": 25, "unitPrice": 18.00, "total": 450.00 },
+      { "description": "Freight Handling Surcharge", "quantity": 1, "unitPrice": 200.00, "total": 200.00 }
+    ],
+    "grandTotal": 2000.00
+  },
+  "validation": {
+    "schemaValid": true,
+    "lineItemArithmeticOk": true,
+    "grandTotalArithmeticOk": true,
+    "warnings": [
+      "Table does not start at row 1; title, subtitle, and metadata (Ref No, Issued, Client) occupy rows 1-9 above the header row at row 11.",
+      "Column headers are non-standard ('Item', 'Units', 'Price/Unit', 'Line Amount') and were mapped to the schema by the LLM.",
+      "Totals block ('Subtotal', 'Handling Fee', 'AMOUNT DUE') is separated from the line-item table by a blank row and uses a label ('AMOUNT DUE') rather than 'Grand Total'."
+    ]
+  },
+  "confidence": 0.95,
+  "status": "extracted",
+  "uncertainFields": [],
+  "notes": "Excel workbook with a metadata block above the table, non-standard headers, and totals in a separate section below a gap row. Demonstrates the Excel normalizer does not assume row 1 = headers. Expected to extract cleanly."
+}

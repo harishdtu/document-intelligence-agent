@@ -1,0 +1,38 @@
+{
+  "sourceFile": "invoice-03-scanned-low-quality.pdf",
+  "documentType": "scanned_image",
+  "ocrUsed": true,
+  "ocrMeanWordConfidence": 88.4,
+  "extractionAttempts": 1,
+  "extractedData": {
+    "vendorName": "BluePeak Services",
+    "invoiceNumber": "BP-5521",
+    "invoiceDate": "2026-03-28",
+    "lineItems": [
+      { "description": "On-site HVAC Inspection", "quantity": 1, "unitPrice": 180.00, "total": 180.00 },
+      { "description": "Filter Replacement (20x25x1)", "quantity": 4, "unitPrice": 14.75, "total": 59.00 },
+      { "description": "Emergency Call-Out Fee", "quantity": 1, "unitPrice": 120.00, "total": 120.00 }
+    ],
+    "grandTotal": 359.00
+  },
+  "validation": {
+    "schemaValid": true,
+    "lineItemArithmeticOk": true,
+    "grandTotalArithmeticOk": true,
+    "warnings": [
+      "Document is an image-only PDF (no embedded text layer); OCR fallback was used.",
+      "OCR misread the 'Qty' column header (rendered as 'yi'), so quantity values were inferred positionally rather than from a confidently recognized header.",
+      "OCR confidence for the invoice number token 'BP-5521' was below the acceptance threshold (~76%).",
+      "Page is rotated approximately 4-5 degrees with visible scan noise, uneven shading, and JPEG compression artifacts."
+    ]
+  },
+  "confidence": 0.58,
+  "status": "needs_review",
+  "uncertainFields": [
+    "invoiceNumber",
+    "lineItems[0].quantity",
+    "lineItems[1].quantity",
+    "lineItems[2].quantity"
+  ],
+  "notes": "Deliberately degraded scanned invoice (rotated, noisy, blurred, heavily JPEG-compressed, no text layer). In this run OCR happened to recover every value correctly, but the pipeline still routes ANY OCR-derived extraction below the confidence threshold to needs_review by design, because OCR text can look locally confident while being structurally wrong (e.g. a misread column header silently shifting values). This is the intended demonstration case: the system does not silently trust a scanned document just because individual words look fine."
+}

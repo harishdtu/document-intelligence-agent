@@ -1,0 +1,90 @@
+// Prisma schema for the Document Intelligence Agent
+// Designed to run against Postgres, including Supabase-hosted Postgres.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum InvoiceStatus {
+  uploaded
+  processing
+  extracted
+  needs_review
+  reviewed
+  failed
+}
+
+enum DocumentType {
+  pdf_text
+  scanned_image
+  excel
+  unknown
+}
+
+model Invoice {
+  id       String @id @default(uuid())
+
+  // Core extracted / correctable fields (kept relational, not buried in JSON)
+  vendorName    String?
+  invoiceNumber String?
+  invoiceDate   DateTime?
+  grandTotal    Decimal?  @db.Decimal(14, 2)
+
+  // Pipeline / lifecycle state
+  status              InvoiceStatus @default(uploaded)
+  confidence          Float?
+  documentType        DocumentType  @default(unknown)
+  ocrUsed             Boolean       @default(false)
+  extractionAttempts  Int           @default(0)
+  extractionError     String?
+
+  // Fields the confidence scorer flagged as uncertain, e.g. ["invoiceDate", "lineItems[1].unitPrice"]
+  uncertainFields Json @default("[]")
+
+  // Full raw model output + pipeline metadata, retained for audit/debugging.
+  // Core fields above are still the relational source of truth for the app.
+  rawExtractionJson Json?
+
+  // Source file bookkeeping
+  sourceFileName String
+  sourceFilePath String
+  mimeType       String
+
+  // Human review
+  reviewedAt DateTime?
+  reviewedBy String?
+
+  createdAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @updatedAt
+
+  lineItems InvoiceLineItem[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model InvoiceLineItem {
+  id          String  @id @default(uuid())
+  invoiceId   String
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  description String
+  quantity    Decimal @db.Decimal(14, 3)
+  unitPrice   Decimal @db.Decimal(14, 2)
+  total       Decimal @db.Decimal(14, 2)
+
+  // Per-line uncertainty, e.g. true if this row's total didn't reconcile with qty * unitPrice
+  uncertain Boolean @default(false)
+
+  sortOrder Int @default(0)
+
+  createdAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([invoiceId])
+}

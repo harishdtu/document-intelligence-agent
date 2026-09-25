@@ -1,0 +1,28 @@
+{
+  "sourceFile": "invoice-01-standard.pdf",
+  "documentType": "pdf_text",
+  "ocrUsed": false,
+  "extractionAttempts": 1,
+  "extractedData": {
+    "vendorName": "Apex Office Supplies",
+    "invoiceNumber": "INV-2026-0417",
+    "invoiceDate": "2026-03-12",
+    "lineItems": [
+      { "description": "Multipurpose Copy Paper (500-ct ream)", "quantity": 40, "unitPrice": 6.25, "total": 250.00 },
+      { "description": "Black Toner Cartridge - HP Compatible", "quantity": 6, "unitPrice": 42.00, "total": 252.00 },
+      { "description": "Standard Stapler, Heavy Duty", "quantity": 10, "unitPrice": 8.50, "total": 85.00 },
+      { "description": "Ballpoint Pens, Box of 12", "quantity": 20, "unitPrice": 3.75, "total": 75.00 }
+    ],
+    "grandTotal": 662.00
+  },
+  "validation": {
+    "schemaValid": true,
+    "lineItemArithmeticOk": true,
+    "grandTotalArithmeticOk": true,
+    "warnings": []
+  },
+  "confidence": 0.97,
+  "status": "extracted",
+  "uncertainFields": [],
+  "notes": "Clean native text PDF, conventional single-column layout. Expected to extract cleanly with no human correction required."
+}

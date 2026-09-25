@@ -1,0 +1,29 @@
+{
+  "sourceFile": "invoice-02-modern-layout.pdf",
+  "documentType": "pdf_text",
+  "ocrUsed": false,
+  "extractionAttempts": 1,
+  "extractedData": {
+    "vendorName": "Northstar Components",
+    "invoiceNumber": "NC-88213",
+    "invoiceDate": "2026-04-02",
+    "lineItems": [
+      { "description": "M3x10 Hex Bolt, Pack of 100", "quantity": 15, "unitPrice": 12.40, "total": 186.00 },
+      { "description": "Aluminum Mounting Bracket, Type-B", "quantity": 8, "unitPrice": 34.50, "total": 276.00 },
+      { "description": "CNC Assembly Service, Line 2", "quantity": 3, "unitPrice": 95.00, "total": 285.00 }
+    ],
+    "grandTotal": 747.00
+  },
+  "validation": {
+    "schemaValid": true,
+    "lineItemArithmeticOk": true,
+    "grandTotalArithmeticOk": true,
+    "warnings": [
+      "Document uses non-standard field labels ('Doc Ref#', 'Doc Date', 'TOTAL DUE') instead of conventional invoice terminology; mapped to schema fields by the LLM extraction step."
+    ]
+  },
+  "confidence": 0.93,
+  "status": "extracted",
+  "uncertainFields": [],
+  "notes": "Clean native text PDF but with an unconventional layout (right-aligned header, reordered table columns: Qty/Item/Rate/Amount, non-standard labels). Demonstrates the pipeline is not hard-coded to one invoice template. Expected to extract cleanly."
+}
