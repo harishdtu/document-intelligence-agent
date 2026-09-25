@@ -25,12 +25,12 @@ The project was verified locally after installation.
 
 `npm run evaluate:samples` successfully processed all 4 bundled samples:
 
-| File                                 | Result      | Confidence |
-| ------------------------------------ | ----------- | ---------: |
-| `invoice-01-standard.pdf`            | `extracted` |       1.00 |
-| `invoice-02-modern-layout.pdf`       | `extracted` |       1.00 |
-| `invoice-03-scanned-low-quality.pdf` | `extracted` |       0.77 |
-| `invoice-04-excel.xlsx`              | `extracted` |       1.00 |
+| File | What makes it different | Actual result |
+|---|---|---|
+| invoice-01-standard.pdf | Clean native-text PDF | extracted, 1.00 |
+| invoice-02-modern-layout.pdf | Unconventional PDF layout/labels | extracted, 1.00 |
+| invoice-03-scanned-low-quality.pdf | Noisy image-only PDF requiring OCR | extracted, 0.77, OCR uncertainty flagged |
+| invoice-04-excel.xlsx | Non-standard Excel layout | extracted, 1.00 |
 
 The scanned invoice exercised the OCR fallback successfully. Native PDF extraction returned no text, OCR was triggered, and Tesseract produced usable text with a mean word confidence of approximately 89.6%.
 
